@@ -14,7 +14,7 @@ TARGET_DSN = "service=biz-b-prod"
 SOURCE_COPY = """COPY (
 SELECT id, firstname, lastname, email, country_id
 FROM business_a.customers
-JOIN countries USING ON (country)
+JOIN countries USING (country)
 WHERE id = %s
 ) TO STDOUT;"""
 
