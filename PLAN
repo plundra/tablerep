@@ -1,0 +1,41 @@
+Goal
+----
+Replicate a table to another database on changes.
+
+
+Short details
+-------------
+INSERT, UPDATE and maybe other operations (DELETE, TRUNCATE, ?) on the
+source table should be replicated to a (similar) table somewhere else.
+It only needs to be one way, the receiving end only does reads.
+
+
+Implementation ideas/details
+----------------------------
+Install a standard audit-style trigger on the source table, emitting a
+NOTIFY with the primary key as payload, maybe what kind of change too.
+
+Then having a helper-script outside of postgres running LISTEN to
+catch when changes occur and applying them on the recieving table.
+
+
+Pitfalls / To be figured out
+----------------------------
+Things to be figured out or be aware of:
+ - Initial sync
+     We can probably get away with a huge COPY and manually keep track
+     of PKs changing while it is running. Else some sort of queuing is
+    needed, probably.
+
+ - Out of sync
+     Could be due to the LISTENer not running or something unknown.
+
+ - ... more ...
+
+
+Thoughts during implementation
+------------------------------
+ - source_notifier.sql
+     Hardcoded "key" column for OLD/NEW for now. No need for portability now.
+ - Just as the above, trigger-functions should be more generic.
+ - ... more ...
