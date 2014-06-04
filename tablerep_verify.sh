@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Example script on how to verify the two tables are in-sync
 
-SOURCE_DSN="service=biz-a-dev"
-TARGET_DSN="service=biz-b-dev"
+SOURCE_DSN="service=biz-a-prod"
+TARGET_DSN="service=biz-b-prod"
 
 SOURCE_QUERY="COPY (
 SELECT id, firstname, lastname, email, country_id
